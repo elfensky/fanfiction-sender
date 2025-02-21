@@ -1,4 +1,10 @@
-function sendPageContentToAPI(content) {
+function extractStoryText() {
+    const storyTextElement = document.getElementById("storytext");
+    const paragraphs = Array.from(storyTextElement.getElementsByTagName("p"));
+    return paragraphs.map((paragraph) => paragraph.textContent);
+  }
+  
+  function sendPageContentToAPI(content) {
     const apiURL = "https://api.lavrenov.io/fanfiction";
     fetch(apiURL, {
       method: "POST",
@@ -15,5 +21,9 @@ function sendPageContentToAPI(content) {
         console.error("Error:", error);
       });
   }
+
+  console.log("fanfiction sender is running");
   
-sendPageContentToAPI(document.documentElement.outerHTML);
+  const storyText = extractStoryText();
+  console.log(storyText);
+  sendPageContentToAPI(storyText);
